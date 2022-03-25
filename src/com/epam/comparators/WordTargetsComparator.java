@@ -8,6 +8,6 @@ public class WordTargetsComparator implements Comparator<WordTarget> {
 
     @Override
     public int compare(WordTarget o1, WordTarget o2) {
-        return o2.getCounter()-o1.getCounter();
+        return o2.getCounter() - o1.getCounter();
     }
 }

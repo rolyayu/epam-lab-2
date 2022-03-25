@@ -21,8 +21,8 @@ public class Runner {
             "([a-zA-Z-'\"]+)?)" +
             "[:,]?\\s?)+[.!?]";
 
-    private static final String TEXT_PATH = "files"+ File.separator +"text.txt";
-    private static final String TARGETS_PATH = "files"+ File.separator +"targets.txt";
+    private static final String TEXT_PATH = "files" + File.separator + "text.txt";
+    private static final String TARGETS_PATH = "files" + File.separator + "targets.txt";
 
     private static Text text;
     private static List<WordTarget> targets;
@@ -31,7 +31,7 @@ public class Runner {
         init();
         printText();
         printSentencesByTargets();
-        setTotalCounters();
+        setTargetCounters();
         printTargets();
         sortTargets();
         printTargets();
@@ -56,7 +56,7 @@ public class Runner {
     }
 
     private static void printSentencesByTargets() {
-        text.printTargets(targets);
+        text.printSentencesByTargets(targets);
         System.out.println();
     }
 
@@ -64,8 +64,8 @@ public class Runner {
         targets.sort(new WordTargetsComparator());
     }
 
-    private static void setTotalCounters() {
-        targets.forEach(target -> target.setCounter(text.totalContentCounter(target)));
+    private static void setTargetCounters() {
+        targets.forEach(target -> target.setCounter(text.totalTargetCounter(target)));
     }
 
     private static void printText() {

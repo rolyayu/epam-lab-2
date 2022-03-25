@@ -1,6 +1,6 @@
 package com.epam.components;
 
-public class WordTarget{
+public class WordTarget {
 
     private String value;
     private int counter;

@@ -1,14 +1,14 @@
 package com.epam.components;
 
 import com.epam.controller.Runner;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
+import java.util.Collection;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Text{
+public class Text {
 
     private final List<Sentence> sentences = new ArrayList<>();
 
@@ -21,35 +21,22 @@ public class Text{
         }
     }
 
-    public void printTargets(List<WordTarget> targets) {
-        for(Sentence sentence:sentences) {
-            System.out.println(sentence.getContent());
-            Iterator<WordTarget> wordTargetIterator = targets.iterator();
-            while(wordTargetIterator.hasNext()) {
-                WordTarget currentTarget = wordTargetIterator.next();
-                int counter = 0;
-                for (TextContent word : sentence.getWords()) {
-                    if (word.getContent().equalsIgnoreCase(currentTarget.getValue())) {
-                        counter++;
-                    }
-                }
-                currentTarget.setCounter(counter);
-                System.out.print(currentTarget+"\s");
-            }
+    public void printSentencesByTargets(List<WordTarget> targets) {
+        sentences.forEach(sentence -> {
+            System.out.println("\n" + sentence.getContent());
+            targets.forEach(target -> {
+                target.setCounter((int) sentence.getWords().stream().
+                        filter(word -> word.matchesTarget(target)).
+                        count());
+                System.out.print(target + "\s");
+            });
             System.out.println();
-        }
+        });
     }
 
-    public int totalContentCounter(WordTarget target) {
-        int counter = 0;
-        for(Sentence sentence:sentences) {
-            for(TextContent word:sentence.getWords()) {
-                if (word.getContent().equalsIgnoreCase(target.getValue())) {
-                    counter++;
-                }
-            }
-        }
-        return counter;
+    public int totalTargetCounter(WordTarget target) {
+        return (int) sentences.stream().map(Sentence::getWords).flatMap(Collection::stream).
+                filter(word -> word.matchesTarget(target)).count();
     }
 
     public String getContent() {

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Sentence implements TextContent{
+public class Sentence implements TextContent {
 
     private List<TextContent> words = new ArrayList<>();
 
@@ -34,6 +34,11 @@ public class Sentence implements TextContent{
     @Override
     public void addContent(TextContent content) {
         this.words.add(content);
+    }
+
+    @Override
+    public boolean matchesTarget(WordTarget target) {
+        return getContent().equalsIgnoreCase(target.getValue());
     }
 
 }
