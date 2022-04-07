@@ -1,7 +1,5 @@
 package com.epam.components;
 
-import com.epam.controller.Runner;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -9,10 +7,19 @@ import java.util.regex.Pattern;
 
 public class Sentence implements TextContent {
 
-    private List<TextContent> words = new ArrayList<>();
+    public static final String WORD_PATTERN = "(\\+\\d{3}\\(\\d{2}\\)\\d{3}\\-\\d\\d\\-\\d\\d)?" +
+            "(\\w*@\\w*\\.\\w{2,})?" +
+            "([A-Z]?[-]?([a-zA-Z']*))";
+
+    private List<TextContent> words;
 
     public Sentence(String sentence) {
-        Pattern wordPattern = Pattern.compile(Runner.WORD_PATTERN);
+        words = new ArrayList<>();
+        initWords(sentence);
+    }
+
+    private void initWords(String sentence) {
+        Pattern wordPattern = Pattern.compile(WORD_PATTERN);
         Matcher wordMatcher = wordPattern.matcher(sentence);
         while (wordMatcher.find()) {
             Word currentWord = new Word(sentence.substring(wordMatcher.start(), wordMatcher.end()));
